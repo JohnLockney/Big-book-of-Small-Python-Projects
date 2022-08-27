@@ -44,9 +44,9 @@ def main():
         print('Money:', money)
         bet = getBet(money)
 
-        # Give the dealer and player two cards from teh deck each:
+        # Give the dealer and player two cards from the deck each:
         deck = getDeck()
-        daelerHand = [deck.pop(), deck.pop()]
+        dealerHand = [deck.pop(), deck.pop()]
         playerHand = [deck.pop(), deck.pop()]
 
         # Handle player actions:
@@ -83,15 +83,15 @@ def main():
 
             if move in ('S', 'D'):
                 # the player has busted
-                continue
+                break
 
-        # handle the dealer's actions
+        # handle the dealer's actions # (note: playerHand in line 89 should be dealerHand ???)
         if getHandValue(playerHand) <= 21:
             while getHandValue(dealerHand) < 17:
                 # Dealer hits
                 print("Dealer hits...")
                 dealerHand.append(deck.pop())
-                displayHands(lpayerHand, dealerHand, False)
+                displayHands(playerHand, dealerHand, False)
 
                 if getHandValue(dealerHand) > 21:
                     break # the dealer has busted
@@ -182,17 +182,17 @@ def getHandValue(cards):
         else:
             value += int(rank) # numbered cards
 
-        # Add the value for aces:
-        value += numberOfAces # Add 1 per ace
-        for i in range(numberOfAces):
-            # if another 10 can be added with busting (should be "without)
-            if value + 10 <= 21:
-                value += 10
+    # Add the value for aces:
+    value += numberOfAces # Add 1 per ace
+    for i in range(numberOfAces):
+        # if another 10 can be added with busting (should be "without)
+        if value + 10 <= 21:
+            value += 10
 
-        return value
+    return value
 
 
-def DisplayCards(cards):
+def displayCards(cards):
     """ Display all teh cards in the card list """
     rows = ['', '', '', '', ''] # The text to display on each row
 
@@ -206,9 +206,9 @@ def DisplayCards(cards):
         else:
             # Print the card's front
             rank, suit = card # The card is a tuple data structure
-            rows[1] += '{} }'.format(rank.ljust(2))
-            rows[2] += ' {} '.format (rank.ljust (2))
-            rows[3] += '_{}'.format (rank.ljust (2))
+            rows[1] += '|{} | '.format(rank.ljust(2))
+            rows[2] += '| {} | '.format (suit)
+            rows[3] += '|_{}| '.format (rank.ljust (2))
 
     # Print each row on the screen:
     for row in rows:
@@ -225,7 +225,7 @@ def getMove(playerHand, money):
         # The player can double down on their first move, which we can
         # tell because they'll have exactly two cards:
         if len(playerHand) == 2 and money > 0:
-            moves.append('Double down')
+            moves.append('(D)ouble down')
 
         # Get the player move:
         movePrompt = ', '.join(moves) + '>'
