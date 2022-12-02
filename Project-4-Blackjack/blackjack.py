@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+2#!/usr/bin/env python
 
 """Blackjack, by Al Sweigart al@inventwithpython.com
 The classic card game also known as 21. (This version does not have
@@ -207,8 +207,8 @@ def displayCards(cards):
             # Print the card's front
             rank, suit = card # The card is a tuple data structure
             rows[1] += '|{} | '.format(rank.ljust(2))
-            rows[2] += '| {} | '.format (suit)
-            rows[3] += '|_{}| '.format (rank.ljust (2))
+            rows[2] += '|{} | '.format (suit)
+            rows[3] += '|{} | '.format (rank.ljust (2))
 
     # Print each row on the screen:
     for row in rows:
